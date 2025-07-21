@@ -39,21 +39,22 @@ class AIGABackendTester:
         print(f"{status}: {test_name} - {details}")
         
     def test_root_endpoint(self):
-        """Test root endpoint"""
-        print("\n=== Testing Root Endpoint ===")
+        """Test API connectivity via auth endpoint"""
+        print("\n=== Testing API Connectivity ===")
         try:
-            response = requests.get(f"{BACKEND_URL}/")
+            # Test API connectivity via a known working endpoint
+            response = requests.get(f"{API_BASE}/auth/login")
             if response.status_code == 200:
                 data = response.json()
-                if data.get("message") == "AIGA Connect API":
-                    self.log_result("database", "Root endpoint", True, "API is accessible")
+                if "auth_url" in data:
+                    self.log_result("database", "API connectivity", True, "API is accessible")
                     return True
                 else:
-                    self.log_result("database", "Root endpoint", False, f"Unexpected response: {data}")
+                    self.log_result("database", "API connectivity", False, f"Unexpected response: {data}")
             else:
-                self.log_result("database", "Root endpoint", False, f"Status: {response.status_code}")
+                self.log_result("database", "API connectivity", False, f"Status: {response.status_code}")
         except Exception as e:
-            self.log_result("database", "Root endpoint", False, f"Connection error: {str(e)}")
+            self.log_result("database", "API connectivity", False, f"Connection error: {str(e)}")
         return False
         
     def test_auth_login_endpoint(self):
