@@ -298,7 +298,7 @@ class AIGABackendTester:
         
         # Test basic connectivity
         if not self.test_root_endpoint():
-            print("❌ Cannot connect to backend. Stopping tests.")
+            print("❌ Cannot connect to API. Stopping tests.")
             return
             
         # Test authentication endpoints
